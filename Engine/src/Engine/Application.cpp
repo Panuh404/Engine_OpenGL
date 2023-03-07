@@ -1,5 +1,6 @@
 #include "Application.h"
 
+#include "Renderer/Buffer.h"
 #include <iostream>
 
 int main()
@@ -101,17 +102,11 @@ int main()
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    // Vertex Buffer Object
-    uint32_t VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    VertexBuffer VBO(vertices, sizeof(vertices));
+    IndexBuffer IBO(indices, sizeof(indices));
 
-    // Index Buffer Object
-    uint32_t IBO;
-    glGenBuffers(1, &IBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    VBO.Bind();
+    IBO.Bind();
 
     // Vertex Attributes
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
