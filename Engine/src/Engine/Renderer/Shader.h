@@ -19,6 +19,10 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
+	// Uniforms Handle
+	void SetInt(const std::string& name, int value);
+	void SetFloat(const std::string& name, float value);
+
 private:
 	uint32_t m_RendererID;
 	std::string m_Name;

@@ -123,3 +123,15 @@ void Shader::verify(uint32_t shader, ShaderType type)
 		}
 	}
 }
+
+void Shader::SetInt(const std::string& name, int value)
+{
+	GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform1i(location, value);
+}
+
+void Shader::SetFloat(const std::string& name, float value)
+{
+	GLint location = glGetUniformLocation(m_RendererID, name.c_str());
+	glUniform1f(location, value);
+}

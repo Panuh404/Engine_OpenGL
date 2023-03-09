@@ -89,6 +89,7 @@
     <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\Engine\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Engine\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Engine\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="vendor\stb\stb_image.cpp" />
   </ItemGroup>
@@ -96,10 +97,13 @@
     <ClInclude Include="src\Engine\Application.h" />
     <ClInclude Include="src\Engine\Renderer\Buffer.h" />
     <ClInclude Include="src\Engine\Renderer\Shader.h" />
+    <ClInclude Include="src\Engine\Renderer\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\basic\basicFragment.glsl" />
     <None Include="res\shaders\basic\basicVertex.glsl" />
+    <None Include="res\shaders\texture\doubleTextureFragment.glsl" />
+    <None Include="res\shaders\texture\doubleTextureVertex.glsl" />
     <None Include="res\shaders\texture\textureFragment.glsl" />
     <None Include="res\shaders\texture\textureVertex.glsl" />
   </ItemGroup>
