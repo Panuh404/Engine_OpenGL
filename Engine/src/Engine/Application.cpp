@@ -5,7 +5,9 @@
 #include "Renderer/Texture.h"
 #include "Renderer/VertexArray.h"
 
-#include "stb_image.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
 
@@ -39,11 +41,9 @@ int main()
     VertexArray VAO;
     VAO.Bind();
 
-    //Shader basicShader("Basic", "res/shaders/basic/basicVertex.glsl", "res/shaders/basic/basicFragment.glsl");
-    //Shader textureShader("Texture","res/shaders/texture/textureVertex.glsl", "res/shaders/texture/textureFragment.glsl");
-    Shader doubleTextureShader("DobleTexture","res/shaders/texture/doubleTextureVertex.glsl", "res/shaders/texture/doubleTextureFragment.glsl");
+    Shader TextureShader("Texture","res/shaders/texture/TransformVertex.glsl", "res/shaders/texture/TransformFragment.glsl");
 
-    VertexBuffer VBO(vertices3, sizeof(vertices3));
+    VertexBuffer VBO(vertices4, sizeof(vertices4));
     IndexBuffer IBO(indices, sizeof(indices));
 
     VBO.Bind();
@@ -53,20 +53,17 @@ int main()
     Texture texture1("res/textures/container.jpg");
     Texture texture2("res/textures/awesomeface.png");
 
-    doubleTextureShader.Bind();
-    doubleTextureShader.SetInt("texture1", 0);
-    doubleTextureShader.SetInt("texture2", 1);
+    TextureShader.Bind();
+    TextureShader.SetInt("texture1", 0);
+    TextureShader.SetInt("texture2", 1);
 
 
     // vertex attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    // texture attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 
 
     // Application Loop
@@ -79,9 +76,16 @@ int main()
         glClearColor(0.3f, 0.4f, 0.7f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        doubleTextureShader.Bind();
         texture1.Bind(0);
         texture2.Bind(1);
+
+        // create transformations
+        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+        TextureShader.Bind();
+        TextureShader.SetMat4("transform", transform);
         VAO.Bind();
         //glDrawArrays(GL_TRIANGLES, 0, 3);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
