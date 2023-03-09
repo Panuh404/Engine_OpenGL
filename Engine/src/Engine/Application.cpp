@@ -32,20 +32,21 @@ int main()
         return -1;
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
-    // Vertex Array Object
+    // Tell glfw to capture our mouse
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     VertexArray VAO;
-    VAO.Bind();
-
     Shader TestShader("Coordinate","res/shaders/transform/coordinateVexel.glsl", "res/shaders/transform/coordinateFragment.glsl");
-
     VertexBuffer VBO(verticesCube, sizeof(verticesCube));
     IndexBuffer IBO(indices, sizeof(indices));
 
+    VAO.Bind();
     VBO.Bind();
     IBO.Bind();
 
-    // Texture
     Texture texture1("res/textures/container.jpg");
     Texture texture2("res/textures/awesomeface.png");
 
@@ -53,14 +54,12 @@ int main()
     TestShader.SetInt("texture1", 0);
     TestShader.SetInt("texture2", 1);
 
-
     // vertex attributes
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-
 
     // Application Loop
     while(!glfwWindowShouldClose(window))
@@ -73,6 +72,10 @@ int main()
         glClearColor(0.3f, 0.4f, 0.7f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        // Delta time
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
         // Render Loop
         texture1.Bind(0);
         texture2.Bind(1);
