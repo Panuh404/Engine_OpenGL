@@ -108,8 +108,10 @@
     <None Include="res\shaders\texture\doubleTextureVertex.glsl" />
     <None Include="res\shaders\texture\textureFragment.glsl" />
     <None Include="res\shaders\texture\textureVertex.glsl" />
-    <None Include="res\shaders\texture\TransformFragment.glsl" />
-    <None Include="res\shaders\texture\TransformVertex.glsl" />
+    <None Include="res\shaders\transform\coordinateFragment.glsl" />
+    <None Include="res\shaders\transform\coordinateVexel.glsl" />
+    <None Include="res\shaders\transform\TransformFragment.glsl" />
+    <None Include="res\shaders\transform\TransformVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

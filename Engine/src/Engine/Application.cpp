@@ -41,9 +41,9 @@ int main()
     VertexArray VAO;
     VAO.Bind();
 
-    Shader TextureShader("Texture","res/shaders/texture/TransformVertex.glsl", "res/shaders/texture/TransformFragment.glsl");
+    Shader TestShader("Coordinate","res/shaders/transform/coordinateVexel.glsl", "res/shaders/transform/coordinateFragment.glsl");
 
-    VertexBuffer VBO(vertices4, sizeof(vertices4));
+    VertexBuffer VBO(verticesCube, sizeof(verticesCube));
     IndexBuffer IBO(indices, sizeof(indices));
 
     VBO.Bind();
@@ -53,9 +53,9 @@ int main()
     Texture texture1("res/textures/container.jpg");
     Texture texture2("res/textures/awesomeface.png");
 
-    TextureShader.Bind();
-    TextureShader.SetInt("texture1", 0);
-    TextureShader.SetInt("texture2", 1);
+    TestShader.Bind();
+    TestShader.SetInt("texture1", 0);
+    TestShader.SetInt("texture2", 1);
 
 
     // vertex attributes
@@ -73,22 +73,29 @@ int main()
         processInput(window);
 
         // rendering commands
+        glEnable(GL_DEPTH_TEST);
         glClearColor(0.3f, 0.4f, 0.7f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         texture1.Bind(0);
         texture2.Bind(1);
 
-        // create transformations
-        glm::mat4 transform = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-        transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-        TextureShader.Bind();
-        TextureShader.SetMat4("transform", transform);
+        glm::mat4 view = glm::mat4(1.0f);
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0));
+
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+
+        TestShader.Bind();
+        TestShader.SetMat4("model", model);
+        TestShader.SetMat4("view", view);
+        TestShader.SetMat4("projection", projection);
         VAO.Bind();
-        //glDrawArrays(GL_TRIANGLES, 0, 3);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // Check and call events and swap the buffers
         glfwSwapBuffers(window);
