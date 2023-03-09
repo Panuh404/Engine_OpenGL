@@ -46,13 +46,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)_bin\$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)_int\$(Platform)-$(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)vendor\stb;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)vendor\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)_bin\$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)_int\$(Platform)-$(Configuration)\</IntDir>
-    <IncludePath>$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)vendor\stb;$(ProjectDir)vendor\glad\include;$(ProjectDir)vendor\GLFW\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)vendor\GLFW\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,6 +90,7 @@
     <ClCompile Include="src\Engine\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Engine\Renderer\Shader.cpp" />
     <ClCompile Include="src\glad.c" />
+    <ClCompile Include="vendor\stb\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Application.h" />
@@ -99,6 +100,8 @@
   <ItemGroup>
     <None Include="res\shaders\basic\basicFragment.glsl" />
     <None Include="res\shaders\basic\basicVertex.glsl" />
+    <None Include="res\shaders\texture\textureFragment.glsl" />
+    <None Include="res\shaders\texture\textureVertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

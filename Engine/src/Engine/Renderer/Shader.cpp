@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 
-Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)
+Shader::Shader(const std::string name, const std::string& vertexSource, const std::string& fragmentSource) : m_Name(name)
 {
 	std::string vShaderCode = ReadFile(vertexSource);
 	std::string fShaderCode = ReadFile(fragmentSource);
@@ -85,7 +85,7 @@ void Shader::verify(uint32_t shader, ShaderType type)
 		}
 		else
 		{
-			std::cout << "SHADER::VERTEX::COMPILED" << std::endl;
+			std::cout << "SHADER::" << m_Name<< "::VERTEX::COMPILED" << std::endl;
 		}
 	}
 
@@ -102,7 +102,7 @@ void Shader::verify(uint32_t shader, ShaderType type)
 		}
 		else
 		{
-			std::cout << "SHADER::FRAGMENT::COMPILED" << std::endl;
+			std::cout << "SHADER::" << m_Name << "::FRAGMENT::COMPILED" << std::endl;
 		}
 	}
 
@@ -119,7 +119,7 @@ void Shader::verify(uint32_t shader, ShaderType type)
 		}
 		else
 		{
-			std::cout << "SHADER::LINKED" << std::endl;
+			std::cout << "SHADER::" << m_Name << "::LINKED" << std::endl;
 		}
 	}
 }
