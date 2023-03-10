@@ -61,6 +61,8 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    camera.SetMouseSensitivity(2.5f);
+
     // Application Loop
     while(!glfwWindowShouldClose(window))
     {
@@ -80,35 +82,15 @@ int main()
         texture1.Bind(0);
         texture2.Bind(1);
 
-		// Model
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        TestShader.Bind();
+    	// Projection
+    	glm::mat4 projection = glm::perspective(glm::radians(camera.GetZoom()), (float)Screen_Width / (float)Screen_Height, 0.1f, 100.0f);
+        TestShader.SetMat4("projection", projection);
 
         // View
-        glm::mat4 view = glm::mat4(1.0f);
-        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0));
-
-    	// Projection
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
-        glm::vec3 cubePositions[] = {
-		    glm::vec3(0.0f,  0.0f,  0.0f),
-		    glm::vec3(2.0f,  5.0f, -15.0f),
-		    glm::vec3(-1.5f, -2.2f, -2.5f),
-		    glm::vec3(-3.8f, -2.0f, -12.3f),
-		    glm::vec3(2.4f, -0.4f, -3.5f),
-		    glm::vec3(-1.7f,  3.0f, -7.5f),
-		    glm::vec3(1.3f, -2.0f, -2.5f),
-		    glm::vec3(1.5f,  2.0f, -2.5f),
-		    glm::vec3(1.5f,  0.2f, -1.5f),
-		    glm::vec3(-1.3f,  1.0f, -1.5f)
-        };
-
-        TestShader.Bind();
-        TestShader.SetMat4("model", model);
+        glm::mat4 view = camera.GetViewMatrix();
         TestShader.SetMat4("view", view);
-        TestShader.SetMat4("projection", projection);
+        
         VAO.Bind();
 
         for (unsigned int i = 0; i < 10; i++)
