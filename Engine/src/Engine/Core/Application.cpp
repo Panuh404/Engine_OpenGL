@@ -1,9 +1,9 @@
-#include "Application.h"
+#include "Engine/Core/Application.h"
 
-#include "Renderer/Buffer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Texture.h"
-#include "Renderer/VertexArray.h"
+#include "Engine/Renderer/Buffer.h"
+#include "Engine/Renderer/Shader.h"
+#include "Engine/Renderer/Texture.h"
+#include "Engine/Renderer/VertexArray.h"
 
 #include <iostream>
 
@@ -38,20 +38,22 @@ int main()
     // Tell glfw to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    VertexArray VAO;
-    Shader TestShader("Coordinate","res/shaders/transform/coordinateVexel.glsl", "res/shaders/transform/coordinateFragment.glsl");
-    VertexBuffer VBO(verticesCube, sizeof(verticesCube));
-    IndexBuffer IBO(indices, sizeof(indices));
-
-    VAO.Bind();
-    VBO.Bind();
-    IBO.Bind();
-
-    Texture texture1("res/textures/container.jpg");
-    Texture texture2("res/textures/awesomeface.png");
+    Quiet::Shader TestShader("Coordinate", "res/shaders/transform/coordinateVertex.glsl", "res/shaders/transform/coordinateFragment.glsl");
 
     TestShader.Bind();
+
+    Quiet::VertexArray VAO;
+    VAO.Bind();
+
+    Quiet::VertexBuffer VBO(verticesCube, sizeof(verticesCube));
+    VBO.Bind();
+
+    Quiet::IndexBuffer IBO(indices, sizeof(indices));
+    IBO.Bind();
+
+    Quiet::Texture texture1("res/textures/container.jpg");
     TestShader.SetInt("texture1", 0);
+    Quiet::Texture texture2("res/textures/awesomeface.png");
     TestShader.SetInt("texture2", 1);
 
     // vertex attributes
@@ -61,7 +63,7 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    camera.SetMouseSensitivity(2.5f);
+    camera.SetMouseSensitivity(1.5f);
 
     // Application Loop
     while(!glfwWindowShouldClose(window))

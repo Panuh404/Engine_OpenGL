@@ -1,23 +1,26 @@
-#include "VertexArray.h"
+#include "Engine/Renderer/VertexArray.h"
 
 #include <glad/glad.h>
 
-VertexArray::VertexArray()
+namespace Quiet
 {
-	glGenVertexArrays(1, &m_RendererID);
-}
+	VertexArray::VertexArray()
+	{
+		glGenVertexArrays(1, &m_RendererID);
+	}
 
-VertexArray::~VertexArray()
-{
-	glDeleteVertexArrays(1, &m_RendererID);
-}
+	VertexArray::~VertexArray()
+	{
+		glDeleteVertexArrays(1, &m_RendererID);
+	}
 
-void VertexArray::Bind() const
-{
-	glBindVertexArray(m_RendererID);
-}
+	void VertexArray::Bind() const
+	{
+		glBindVertexArray(m_RendererID);
+	}
 
-void VertexArray::Unbind() const
-{
-	glBindVertexArray(0);
+	void VertexArray::Unbind() const
+	{
+		glBindVertexArray(0);
+	}
 }

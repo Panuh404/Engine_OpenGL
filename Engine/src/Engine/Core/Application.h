@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Renderer/Camera.h"
+#include "Engine/Renderer/Camera.h"
 
 // Settings
 const unsigned int Screen_Width = 1280;
@@ -16,7 +16,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // Camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Quiet::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float lastX = Screen_Width / 2.0;
 float lastY = Screen_Height / 2.0;
 bool firstMouse = true;
@@ -31,10 +31,10 @@ inline void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) camera.KeyboardInput(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) camera.KeyboardInput(BACKWARD,deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) camera.KeyboardInput(LEFT,    deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) camera.KeyboardInput(RIGHT,   deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) camera.KeyboardInput(Quiet::FORWARD, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) camera.KeyboardInput(Quiet::BACKWARD,deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) camera.KeyboardInput(Quiet::LEFT,    deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) camera.KeyboardInput(Quiet::RIGHT,   deltaTime);
 }
 
 inline void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)

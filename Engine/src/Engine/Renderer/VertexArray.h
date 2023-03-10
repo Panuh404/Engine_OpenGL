@@ -1,15 +1,21 @@
 #pragma once
 #include <cstdint>
 
-class VertexArray
+namespace Quiet
 {
-public:
-	VertexArray();
-	~VertexArray();
+	//-----------------------------------------------------------------------------
+	// [CLASS] Vertex Array
+	//-----------------------------------------------------------------------------
+	class VertexArray
+	{
+	public:
+		VertexArray();
+		~VertexArray();
 
-	void Bind() const;
-	void Unbind() const;
+		void Bind() const;
+		void Unbind() const;
 
-private:
-	uint32_t m_RendererID;
-};
+	private:
+		uint32_t m_RendererID;
+	};
+}
